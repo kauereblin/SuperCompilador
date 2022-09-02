@@ -73,7 +73,7 @@ namespace SuperCompilador
             this.editor.Margin = new System.Windows.Forms.Padding(0);
             this.editor.Name = "editor";
             this.editor.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-            this.editor.Size = new System.Drawing.Size(884, 259);
+            this.editor.Size = new System.Drawing.Size(900, 259);
             this.editor.TabIndex = 0;
             this.editor.Text = "";
             this.editor.WordWrap = false;
@@ -94,7 +94,7 @@ namespace SuperCompilador
             this.messageTextBox.Name = "messageTextBox";
             this.messageTextBox.ReadOnly = true;
             this.messageTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-            this.messageTextBox.Size = new System.Drawing.Size(913, 204);
+            this.messageTextBox.Size = new System.Drawing.Size(900, 204);
             this.messageTextBox.TabIndex = 2;
             this.messageTextBox.Text = "";
             this.messageTextBox.WordWrap = false;
@@ -110,7 +110,7 @@ namespace SuperCompilador
             this.panelMenu.Controls.Add(this.menuStrip);
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(913, 70);
+            this.panelMenu.Size = new System.Drawing.Size(910, 70);
             this.panelMenu.TabIndex = 3;
             // 
             // menuStrip
@@ -128,7 +128,7 @@ namespace SuperCompilador
             this.helpStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(913, 70);
+            this.menuStrip.Size = new System.Drawing.Size(900, 70);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -140,7 +140,7 @@ namespace SuperCompilador
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeyDisplayString = "ctrl + n";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(86, 66);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(86, 70);
             this.newToolStripMenuItem.Text = "novo [ctrl-n]";
             this.newToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newStripMenuItem_Click);
@@ -151,7 +151,7 @@ namespace SuperCompilador
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeyDisplayString = "ctrl + o";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(83, 66);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(83, 70);
             this.openToolStripMenuItem.Text = "abrir [ctrl-o]";
             this.openToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
@@ -162,7 +162,7 @@ namespace SuperCompilador
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeyDisplayString = "ctrl + s";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(87, 66);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(87, 70);
             this.saveToolStripMenuItem.Text = "salvar [ctrl-s]";
             this.saveToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
@@ -173,7 +173,7 @@ namespace SuperCompilador
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.ShortcutKeyDisplayString = "ctrl + c";
             this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(91, 66);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(91, 70);
             this.copyToolStripMenuItem.Text = "copiar [ctrl-c]";
             this.copyToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
@@ -184,7 +184,7 @@ namespace SuperCompilador
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.ShortcutKeyDisplayString = "ctrl + v";
             this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(84, 66);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(84, 70);
             this.pasteToolStripMenuItem.Text = "colar [ctrl-v]";
             this.pasteToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
@@ -195,7 +195,7 @@ namespace SuperCompilador
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
             this.cutToolStripMenuItem.ShortcutKeyDisplayString = "ctrl + x";
             this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(99, 66);
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(99, 70);
             this.cutToolStripMenuItem.Text = "recortar [ctrl-x]";
             this.cutToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
@@ -206,7 +206,7 @@ namespace SuperCompilador
             this.compileToolStripMenuItem.Name = "compileToolStripMenuItem";
             this.compileToolStripMenuItem.ShortcutKeyDisplayString = "F7";
             this.compileToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7;
-            this.compileToolStripMenuItem.Size = new System.Drawing.Size(89, 66);
+            this.compileToolStripMenuItem.Size = new System.Drawing.Size(89, 70);
             this.compileToolStripMenuItem.Text = "compilar [F7]";
             this.compileToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.compileToolStripMenuItem.Click += new System.EventHandler(this.compileToolStripMenuItem_Click);
@@ -217,7 +217,7 @@ namespace SuperCompilador
             this.helpStripMenuItem.Name = "helpStripMenuItem";
             this.helpStripMenuItem.ShortcutKeyDisplayString = "F1";
             this.helpStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.helpStripMenuItem.Size = new System.Drawing.Size(78, 66);
+            this.helpStripMenuItem.Size = new System.Drawing.Size(78, 70);
             this.helpStripMenuItem.Text = "equipe [F1]";
             this.helpStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.helpStripMenuItem.Click += new System.EventHandler(this.helpStripMenuItem_Click);
@@ -228,7 +228,7 @@ namespace SuperCompilador
             this.panelStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelStatus.Location = new System.Drawing.Point(0, 543);
             this.panelStatus.Name = "panelStatus";
-            this.panelStatus.Size = new System.Drawing.Size(913, 25);
+            this.panelStatus.Size = new System.Drawing.Size(910, 25);
             this.panelStatus.TabIndex = 4;
             // 
             // statusStrip
@@ -238,7 +238,7 @@ namespace SuperCompilador
             this.fileStripStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 0);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(913, 25);
+            this.statusStrip.Size = new System.Drawing.Size(900, 25);
             this.statusStrip.TabIndex = 0;
             this.statusStrip.Text = "statusBar";
             // 
@@ -263,7 +263,7 @@ namespace SuperCompilador
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.messageTextBox);
-            this.splitContainer.Size = new System.Drawing.Size(913, 467);
+            this.splitContainer.Size = new System.Drawing.Size(910, 467);
             this.splitContainer.SplitterDistance = 259;
             this.splitContainer.TabIndex = 5;
             // 
@@ -281,21 +281,22 @@ namespace SuperCompilador
             // splitContainerEditor.Panel2
             // 
             this.splitContainerEditor.Panel2.Controls.Add(this.editor);
-            this.splitContainerEditor.Size = new System.Drawing.Size(913, 259);
+            this.splitContainerEditor.Size = new System.Drawing.Size(910, 259);
             this.splitContainerEditor.SplitterDistance = 25;
             this.splitContainerEditor.TabIndex = 0;
             // 
             // lineNumbers
             // 
             this.lineNumbers.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lineNumbers.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lineNumbers.Enabled = false;
-            this.lineNumbers.Location = new System.Drawing.Point(0, 3);
+            this.lineNumbers.Location = new System.Drawing.Point(0, 0);
             this.lineNumbers.Margin = new System.Windows.Forms.Padding(0);
             this.lineNumbers.Name = "lineNumbers";
             this.lineNumbers.ReadOnly = true;
             this.lineNumbers.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lineNumbers.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.lineNumbers.Size = new System.Drawing.Size(25, 259);
+            this.lineNumbers.Size = new System.Drawing.Size(40, 259);
             this.lineNumbers.TabIndex = 0;
             this.lineNumbers.Text = "";
             this.lineNumbers.WordWrap = false;
@@ -304,12 +305,12 @@ namespace SuperCompilador
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(913, 568);
+            this.ClientSize = new System.Drawing.Size(910, 568);
             this.Controls.Add(this.splitContainer);
             this.Controls.Add(this.panelStatus);
             this.Controls.Add(this.panelMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(929, 607);
+            this.MinimumSize = new System.Drawing.Size(926, 607);
             this.Name = "Interface";
             this.Text = "Super Compilador";
             this.panelMenu.ResumeLayout(false);
