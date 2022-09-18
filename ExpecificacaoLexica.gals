@@ -1,0 +1,84 @@
+#Options
+GenerateScanner = true
+GenerateParser = false
+Language = Java
+ScannerName = Lexico
+ScannerCaseSensitive = true
+ScannerTable = Compact
+Input = String
+#RegularDefinitions
+mai:[A-Z]
+min:[a-z]
+letra: {mai} | {min}
+dig:[0-9]
+digAux: [1-9]
+ordGrandeza: d {digAux} {dig}*
+format: (n | s | t)
+
+#Tokens
+// Identificadores
+identificador: {letra} ( _? ( {letra} | {dig} ) )*
+
+// Tipos
+tpInt   : {dig}+ | ( ( {dig}* {digAux} ) {ordGrandeza} )
+tpFloat : {dig}* \. ( ( ( {dig}* {digAux}) {ordGrandeza} ) | {dig}+)
+tpChar  : \\ {format}
+tpString: \" ( [^\n \\ \"] )* \"
+
+// Comentarios
+comentLinha: # ( [^\n] )*
+comentBloco: \[ \n ( [^ \[ \]] )* \n \]
+
+// Palavras Reservadas
+int     = identificador : "int"
+float   = identificador : "float"
+char    = identificador : "char"
+string  = identificador : "string"
+boolean = identificador : "boolean"
+break   = identificador : "break"
+end     = identificador : "end"
+if      = identificador : "if"
+then    = identificador : "then"
+else    = identificador : "else"
+while   = identificador : "while"
+do      = identificador : "do"
+readln  = identificador : "readln"
+false   = identificador : "false"
+true    = identificador : "true"
+fun     = identificador : "fun"
+main    = identificador : "main"
+print   = identificador : "print"
+println = identificador : "println"
+val     = identificador : "val"
+var     = identificador : "var"
+
+// Simbolos Especiais
+":"
+","
+";"
+"="
+"?"
+"+"
+"-"
+"*"
+"/"
+"{"
+"}"
+"%"
+"("
+")"
+">"
+"<"
+"=="
+"!="
+"&&"
+"||"
+"!"
+"++"
+"--"
+
+// Remover format char 
+:[\ \n\s\t]
+
+// dig dig dig ye
+:!comentLinha

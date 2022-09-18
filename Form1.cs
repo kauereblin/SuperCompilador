@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static SuperCompilador.Constants;
 
 namespace SuperCompilador
 {
@@ -86,7 +87,46 @@ namespace SuperCompilador
 
         private void compileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            messageTextBox.Text = "compilação de programas ainda não foi implementada";
+            int line = 0;
+            EIdentifiers classLexical;
+            string lexeme;
+
+            var lexico = new Lexico();
+            lexico.setInput(editor.Text);
+
+            try
+            {
+                messageTextBox.Text = "linha\tclasse\tlexema\n";
+
+                Token token;
+                while ((token = lexico.nextToken()) != null)
+                {
+                    Console.WriteLine(token.getLexeme());
+                    line = token.getPosition();
+                    classLexical = ((EIdentifiers) token.getId());
+                    lexeme = token.getLexeme();
+
+                    messageTextBox.Text += $"{line}\t{classLexical}\t{lexeme}\n";
+                    // só escreve o lexema, necessário escrever t.getId, t.getPosition()
+
+                    // t.getId () - retorna o identificador da classe. Olhar Constants.java e adaptar, pois 
+                    // deve ser apresentada a classe por extenso
+                    // t.getPosition () - retorna a posição inicial do lexema no editor, necessário adaptar 
+                    // para mostrar a linha	
+
+                    // esse código apresenta os tokens enquanto não ocorrer erro
+                    // no entanto, os tokens devem ser apresentados SÓ se não ocorrer erro, necessário adaptar 
+                    // para atender o que foi solicitado		   
+   }
+            }
+            catch (LexicalError err)
+            {  // tratamento de erros
+                Console.WriteLine(err.Message + " em " + err.getPosition());
+                // e.getMessage() - retorna a mensagem de erro de SCANNER_ERRO (olhar ScannerConstants.java 
+                // e adaptar conforme o enunciado da parte 2)
+                // e.getPosition() - retorna a posição inicial do erro, tem que adaptar para mostrar a 
+                // linha  
+            }
         }
 
         private void helpStripMenuItem_Click(object sender, EventArgs e)
