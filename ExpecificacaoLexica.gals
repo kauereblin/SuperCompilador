@@ -79,6 +79,3 @@ var     = identificador : "var"
 
 // Remover format char 
 :[\ \n\s\t]
-
-// dig dig dig ye
-:!comentLinha

@@ -100,7 +100,7 @@ namespace SuperCompilador
             return TOKEN_STATE[state];
         }
 
-        public int lookupToken(int ord, String key)
+        public int lookupToken(int ord, string key)
         {
             int start = SPECIAL_CASES_INDEXES[ord];
             int end   = SPECIAL_CASES_INDEXES[ord + 1] - 1;

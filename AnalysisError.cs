@@ -6,12 +6,12 @@ namespace SuperCompilador
     {
         private int position;
 
-        public AnalysisError(String msg, int position) : base(msg)
+        public AnalysisError(string msg, int position) : base(msg)
         {
             this.position = position;
         }
 
-        public AnalysisError(String msg) : base(msg) 
+        public AnalysisError(string msg) : base(msg) 
         {
             this.position = -1;
         }
@@ -21,7 +21,7 @@ namespace SuperCompilador
             return position;
         }
 
-        public override String ToString()
+        public override string ToString()
         {
             return base.ToString() + ", @ " + position;
         }
