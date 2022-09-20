@@ -107,16 +107,6 @@ namespace SuperCompilador
                     string lexeme       = token.getLexeme();
 
                     messageTextBox.Text += $"{line}\t\t{lexicalClass}\t\t{lexeme}\n";
-                    // só escreve o lexema, necessário escrever t.getId, t.getPosition()
-
-                    // t.getId () - retorna o identificador da classe. Olhar Constants.java e adaptar, pois 
-                    // deve ser apresentada a classe por extenso
-                    // t.getPosition () - retorna a posição inicial do lexema no editor, necessário adaptar 
-                    // para mostrar a linha	
-
-                    // esse código apresenta os tokens enquanto não ocorrer erro
-                    // no entanto, os tokens devem ser apresentados SÓ se não ocorrer erro, necessário adaptar 
-                    // para atender o que foi solicitado
                 }
             }
             catch (LexicalError err)
@@ -124,11 +114,12 @@ namespace SuperCompilador
                 noError = false;
 
                 int line = Util.getLineNumber(editor.Text, err.getPosition());
-                messageTextBox.Text = $"Erro na linha {line} - {editor.Text[err.getPosition()]} {err.Message}";
-                // e.getMessage() - retorna a mensagem de erro de SCANNER_ERRO (olhar ScannerConstants.java 
-                // e adaptar conforme o enunciado da parte 2)
-                // e.getPosition() - retorna a posição inicial do erro, tem que adaptar para mostrar a 
-                // linha  
+                string invalidSymbol = "";
+
+                if (err.Message == ScannerConstants.SCANNER_ERROR[0])
+                    invalidSymbol = char.ToString(editor.Text[err.getPosition()]);
+
+                messageTextBox.Text = $"Erro na linha {line} - {invalidSymbol} {err.Message}";
             }
 
             if (noError)
