@@ -5,7 +5,7 @@ Language = Java
 ScannerName = Lexico
 ScannerCaseSensitive = true
 ScannerTable = Compact
-Input = String
+Input = Stream
 #RegularDefinitions
 mai:[A-Z]
 min:[a-z]
@@ -15,6 +15,9 @@ digAux: [1-9]
 ordGrandeza: d {digAux} {dig}*
 format: (n | s | t)
 
+// Comentarios
+comentLinha: # ( [^\n] )*
+comentBloco: \[ \n ( [^ \[ \]] )* \n \]
 #Tokens
 // Identificadores
 identificador: {letra} ( _? ( {letra} | {dig} ) )*
@@ -24,10 +27,6 @@ tpInt   : {dig}+ | ( ( {dig}* {digAux} ) {ordGrandeza} )
 tpFloat : {dig}* \. ( ( ( {dig}* {digAux}) {ordGrandeza} ) | {dig}+)
 tpChar  : \\ {format}
 tpString: \" ( [^\n \\ \"] )* \"
-
-// Comentarios
-comentLinha: # ( [^\n] )*
-comentBloco: \[ \n ( [^ \[ \]] )* \n \]
 
 // Palavras Reservadas
 int     = identificador : "int"
@@ -79,3 +78,6 @@ var     = identificador : "var"
 
 // Remover format char 
 :[\ \n\s\t]
+
+:! {comentLinha}
+:! {comentBloco}

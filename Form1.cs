@@ -98,12 +98,8 @@ namespace SuperCompilador
                 Token token;
                 while ((token = lexico.nextToken()) != null)
                 {
-                    EIdentifiers eCLass = (EIdentifiers)token.getId();
-                    if (eCLass == EIdentifiers.t_comentLinha || eCLass == EIdentifiers.t_comentBloco)
-                        continue;
-
                     int    line         = Util.getLineNumber(editor.Text, token.getPosition());
-                    string lexicalClass = getClass(eCLass);
+                    string lexicalClass = getClass((ETokens)token.getId());
                     string lexeme       = token.getLexeme();
 
                     messageTextBox.Text += $"{line}\t\t{lexicalClass}\t\t{lexeme}\n";
@@ -123,7 +119,7 @@ namespace SuperCompilador
             }
 
             if (noError)
-                messageTextBox.Text += "programa compilado com sucesso";
+                messageTextBox.Text += "\n\t\tprograma compilado com sucesso";
         }
 
         private void helpStripMenuItem_Click(object sender, EventArgs e)

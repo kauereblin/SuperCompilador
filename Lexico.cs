@@ -42,7 +42,7 @@ namespace SuperCompilador
                 lastState = state;
                 state = nextState(nextChar(), state);
 
-                if (state< 0)
+                if (state < 0)
                     break;
                 else
                 {
