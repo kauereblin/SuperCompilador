@@ -1,0 +1,220 @@
+#Options
+GenerateScanner = true
+GenerateParser = true
+Language = Java
+ScannerName = Lexico
+ParserName = Sintatico
+SemanticName = Semantico
+ScannerCaseSensitive = true
+ScannerTable = Compact
+Input = Stream
+Parser = LL
+#RegularDefinitions
+mai:[A-Z]
+min:[a-z]
+letra: {mai} | {min}
+dig:[0-9]
+digAux: [1-9]
+ordGrandeza: d {digAux} {dig}*
+format: (n | s | t)
+
+// Comentarios
+comentLinha: # ( [^\n] )*
+comentBloco: \[ \n ( [^ \[ \]] )* \n \]
+#Tokens
+// Identificadores
+identificador: {letra} ( _? ( {letra} | {dig} ) )*
+
+// Tipos
+tpInt   : {dig}+ | ( ( {dig}* {digAux} ) {ordGrandeza} )
+tpFloat : {dig}* \. ( ( ( {dig}* {digAux}) {ordGrandeza} ) | {dig}+)
+tpChar  : \\ {format}
+tpString: \" ( [^\n \\ \"] )* \"
+
+// Palavras Reservadas
+int     = identificador : "int"
+float   = identificador : "float"
+char    = identificador : "char"
+string  = identificador : "string"
+boolean = identificador : "boolean"
+break   = identificador : "break"
+end     = identificador : "end"
+if      = identificador : "if"
+else    = identificador : "else"
+while   = identificador : "while"
+do      = identificador : "do"
+readln  = identificador : "readln"
+false   = identificador : "false"
+true    = identificador : "true"
+fun     = identificador : "fun"
+main    = identificador : "main"
+print   = identificador : "print"
+println = identificador : "println"
+val     = identificador : "val"
+var     = identificador : "var"
+
+// Simbolos Especiais
+":"
+","
+";"
+"="
+"+"
+"-"
+"*"
+"/"
+"{"
+"}"
+"%"
+"("
+")"
+">"
+"<"
+"=="
+"!="
+"&&"
+"||"
+"!"
+
+// Remover format char 
+:[\ \n\s\t]
+
+:! {comentLinha}
+:! {comentBloco}
+#NonTerminals
+<programa>
+
+<expressao>
+
+<instrucao>
+
+<lista_instrucoes>
+<lista_instrucoes_>
+
+<declaracao_constantes>
+
+<declaracao_variaveis>
+
+<comando>
+
+<lista_identificadores>
+<lista_identificadores_>
+
+<tipo>
+
+<valor>
+
+<atribuicao>
+
+<entrada>
+
+<lista_expressao>
+<lista_expressao_>
+
+<saida>
+
+<selecao>
+
+<repeticao>
+
+<string_opcional>
+
+<tipo_saida>
+
+<else_opcional>
+
+<lista_comandos>
+<lista_comandos_>
+
+<dec_t>
+<dec_t_>
+
+<dec_v>
+
+<opcoes>
+
+<expressao_>
+
+<elemento>
+
+<aritmetica>
+
+<aritmetica_>
+
+<relacional>
+
+<relacional_>
+
+<termo>
+
+<termo_>
+
+<fator>
+
+<operador_relacional>
+#Grammar
+//Super Grupo: Arthur Bezerra Pinotti, Kaue Reblin e Luiz Gustavo Klitzke
+
+<programa> ::= fun main "{" <lista_instrucoes> "}" ;
+
+<tipo> ::= float | int | char | string | boolean ;
+<valor> ::= tpInt | tpFloat | tpString | tpChar | true | false ;
+
+<lista_identificadores> ::= identificador <lista_identificadores_> ;
+<lista_identificadores_> ::= "," <lista_identificadores> | î ;
+
+<instrucao> ::= <declaracao_constantes> | <declaracao_variaveis> | <comando> ;
+<lista_instrucoes> ::= <instrucao> <lista_instrucoes_> ;
+<lista_instrucoes_> ::= <lista_instrucoes> | î ;
+
+<dec_t> ::= ":" <tipo> <dec_t_> ;
+<dec_t_> ::= "=" <valor> | î ;
+<dec_v> ::= "=" <valor> ;
+
+<opcoes> ::= <dec_t> | <dec_v> ;
+
+<declaracao_constantes> ::= val <lista_identificadores> <opcoes> ";" ;
+<declaracao_variaveis> ::= var <lista_identificadores> <opcoes> ";" ;
+
+<comando> ::= <atribuicao> | <entrada> | <saida> | <selecao> | <repeticao> | break ";" ;
+<lista_comandos> ::= <comando> <lista_comandos_> ;
+<lista_comandos_> ::= <lista_comandos> | î ;
+
+<atribuicao> ::= identificador "=" <expressao> ";" ;
+
+<entrada> ::= readln "(" <string_opcional> <lista_identificadores> ")" ";" ;
+<string_opcional> ::= tpString "," | î;
+
+<lista_expressao> ::= <expressao> <lista_expressao_>;
+<lista_expressao_> ::= "," <lista_expressao> | î;
+
+<saida> ::= <tipo_saida> "(" <lista_expressao> ")" ";" ;
+<tipo_saida> ::= print | println;
+
+<selecao> ::= if "(" <expressao> ")" <lista_comandos> <else_opcional> end ";" ;
+<else_opcional> ::= else <lista_comandos> | î ;
+
+<repeticao> ::= do <lista_comandos> while "(" <expressao> ")" end ";" ;
+
+<expressao> ::= <elemento> <expressao_> ;
+<expressao_> ::= "&&" <elemento> <expressao_> | "||" <elemento> <expressao_> | î;
+
+<elemento> ::= <relacional> | true | false | "!" <elemento> ;
+
+<relacional> ::= <aritmetica> <relacional_> ;
+<relacional_> ::= <operador_relacional> <aritmetica> | î ;
+
+<operador_relacional> ::= "==" | "!=" | "<" | ">" ;
+
+<aritmetica> ::= <termo> <aritmetica_> ;
+<aritmetica_> ::= "+" <termo> <aritmetica_> | "-" <termo> <aritmetica_> | î ;
+
+<termo> ::= <fator> <termo_> ;
+<termo_> ::= î | "*" <fator> <termo_> 
+ 	       | "/" <fator> <termo_> 
+	       | "%" <fator> <termo_> ;
+
+<fator> ::= identificador | tpInt | tpFloat | tpChar | tpString |
+	    "(" <expressao> ")" |
+	    "+" <fator> | 
+	    "-" <fator> ;
+
