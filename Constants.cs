@@ -55,8 +55,6 @@ namespace SuperCompilador
             t_TOKEN_46      = 46 ,//"&&"
             t_TOKEN_47      = 47 ,//"||"
             t_TOKEN_48      = 48 ,//"!"
-            t_TOKEN_49      = 49 ,//"++"
-            t_TOKEN_50      = 50 ,//"--"
         }
 
         public static string getClass(ETokens eId)
