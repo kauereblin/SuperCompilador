@@ -87,25 +87,38 @@ namespace SuperCompilador
 
         private void compileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var lexico = new Lexico();
+            var lexico    = new Lexico();
+            var sintatico = new Sintatico();
+            var semantico = new Semantico();
+
             lexico.setInput(editor.Text);
             bool noError = true;
 
             try
             {
-                messageTextBox.Text = "linha\t\tclasse\t\t\tlexema\n";
-
-                Token token;
-                while ((token = lexico.nextToken()) != null)
-                {
-                    int    line         = Util.getLineNumber(editor.Text, token.getPosition());
-                    string lexicalClass = getClass((ETokens)token.getId());
-                    string lexeme       = token.getLexeme();
-
-                    messageTextBox.Text += $"{line}\t\t{lexicalClass}\t\t{lexeme}\n";
-                }
+                sintatico.parse(lexico, semantico);
             }
             catch (LexicalError err)
+            {
+                noError = false;
+
+                int line = Util.getLineNumber(editor.Text, err.getPosition());
+                string invalidSymbol = "";
+
+                if (err.Message == ScannerConstants.SCANNER_ERROR[0])
+                    invalidSymbol = char.ToString(editor.Text[err.getPosition()]);
+
+                messageTextBox.Text = $"Erro na linha {line} - {invalidSymbol} {err.Message}";
+            }
+            catch (SyntaticError err)
+            {
+                noError = false;
+
+                int line = Util.getLineNumber(editor.Text, err.getPosition());
+
+                messageTextBox.Text = $"Erro na linha {line} - encontrado {err.lexeme} {err.Message}";
+            }
+            catch (SemanticError err)
             {
                 noError = false;
 

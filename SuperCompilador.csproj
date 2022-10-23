@@ -65,6 +65,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnalysisError.cs" />
+    <Compile Include="ParserConstants.cs" />
+    <Compile Include="Semantico.cs" />
+    <Compile Include="Sintatico.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Form1.cs">
@@ -83,6 +86,7 @@
     <Compile Include="Token.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

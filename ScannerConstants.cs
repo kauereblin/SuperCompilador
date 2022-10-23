@@ -1,8 +1,8 @@
 namespace SuperCompilador
 {
-    public class ScannerConstants
+    public static class ScannerConstants
     {
-        public static int[] SCANNER_TABLE_INDEXES = new int[]
+        public static int[] SCANNER_TABLE_INDEXES = 
         {
             0,
             88,
@@ -1141,7 +1141,7 @@ namespace SuperCompilador
             { 0, 0, 0, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20 };
 
         public static string[] SPECIAL_CASES_KEYS =
-            {  "boolean", "break", "char", "do", "else", "end", "false", "float", "fun", "if", "int", "main", "print", "println", "readln", "string", "true", "val", "var", "while" };
+            { "boolean", "break", "char", "do", "else", "end", "false", "float", "fun", "if", "int", "main", "print", "println", "readln", "string", "true", "val", "var", "while" };
 
         public static int[] SPECIAL_CASES_VALUES =
             {  11, 12, 9, 17, 15, 13, 19, 8, 21, 14, 7, 22, 23, 24, 18, 10, 20, 25, 26, 16 };
@@ -1151,7 +1151,7 @@ namespace SuperCompilador
             "símbolo inválido",
             "",
             "",
-            "constante string inválida",
+            "constante string inválida ou não finalizada",
             "",
             "",
             "operador lógico \"&&\" inválido",

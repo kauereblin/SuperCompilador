@@ -2,7 +2,7 @@ using System.Windows.Forms;
 
 namespace SuperCompilador
 {
-    public class Constants : ScannerConstants
+    public class Constants
     {
         public enum ETokens
         { 
@@ -21,40 +21,38 @@ namespace SuperCompilador
             t_break         = 12,
             t_end           = 13,
             t_if            = 14,
-            t_then          = 15,
-            t_else          = 16,
-            t_while         = 17,
-            t_do            = 18,
-            t_readln        = 19,
-            t_false         = 20,
-            t_true          = 21,
-            t_fun           = 22,
-            t_main          = 23,
-            t_print         = 24,
-            t_println       = 25,
-            t_val           = 26,
-            t_var           = 27,
-            t_TOKEN_28      = 28 ,//":"
-            t_TOKEN_29      = 29 ,//","
-            t_TOKEN_30      = 30 ,//";"
-            t_TOKEN_31      = 31 ,//"="
-            t_TOKEN_32      = 32 ,//"?"
-            t_TOKEN_33      = 33 ,//"+"
-            t_TOKEN_34      = 34 ,//"-"
-            t_TOKEN_35      = 35 ,//"*"
-            t_TOKEN_36      = 36 ,//"/"
-            t_TOKEN_37      = 37 ,//"{"
-            t_TOKEN_38      = 38 ,//"}"
-            t_TOKEN_39      = 39 ,//"%"
-            t_TOKEN_40      = 40 ,//"("
-            t_TOKEN_41      = 41 ,//")"
-            t_TOKEN_42      = 42 ,//">"
-            t_TOKEN_43      = 43 ,//"<"
-            t_TOKEN_44      = 44 ,//"=="
-            t_TOKEN_45      = 45 ,//"!="
-            t_TOKEN_46      = 46 ,//"&&"
-            t_TOKEN_47      = 47 ,//"||"
-            t_TOKEN_48      = 48 ,//"!"
+            t_else          = 15,
+            t_while         = 16,
+            t_do            = 17,
+            t_readln        = 18,
+            t_false         = 19,
+            t_true          = 20,
+            t_fun           = 21,
+            t_main          = 22,
+            t_print         = 23,
+            t_println       = 24,
+            t_val           = 25,
+            t_var           = 26,
+            t_TOKEN_27      = 27, //":"
+            t_TOKEN_28      = 28, //","
+            t_TOKEN_29      = 29, //";"
+            t_TOKEN_30      = 30, //"="
+            t_TOKEN_31      = 31, //"+"
+            t_TOKEN_32      = 32, //"-"
+            t_TOKEN_33      = 33, //"*"
+            t_TOKEN_34      = 34, //"/"
+            t_TOKEN_35      = 35, //"{"
+            t_TOKEN_36      = 36, //"}"
+            t_TOKEN_37      = 37, //"%"
+            t_TOKEN_38      = 38, //"("
+            t_TOKEN_39      = 39, //")"
+            t_TOKEN_40      = 40, //">"
+            t_TOKEN_41      = 41, //"<"
+            t_TOKEN_42      = 42, //"=="
+            t_TOKEN_43      = 43, //"!="
+            t_TOKEN_44      = 44, //"&&"
+            t_TOKEN_45      = 45, //"||"
+            t_TOKEN_46      = 46, //"!"
         }
 
         public static string getClass(ETokens eId)
@@ -73,7 +71,7 @@ namespace SuperCompilador
             }
             else if (eId >= ETokens.t_int && eId <= ETokens.t_var)
                 return "palavra reservada";
-            else if ((eId >= ETokens.EPSILON && eId <= ETokens.DOLLAR) || eId >= ETokens.t_TOKEN_28)
+            else if (eId == ETokens.EPSILON || eId == ETokens.DOLLAR || eId >= ETokens.t_TOKEN_27)
                 return "símbolo especial";
 
             return "TOKEN INVÁLIDO";
