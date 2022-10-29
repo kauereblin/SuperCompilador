@@ -132,7 +132,7 @@ namespace SuperCompilador
             }
 
             if (noError)
-                messageTextBox.Text = "\n\t\tprograma compilado com sucesso";
+                messageTextBox.Text = "programa compilado com sucesso";
         }
 
         private void helpStripMenuItem_Click(object sender, EventArgs e)

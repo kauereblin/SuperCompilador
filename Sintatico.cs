@@ -73,7 +73,7 @@ namespace SuperCompilador
                     throw new SyntaticError(ParserConstants.PARSER_ERROR[x], currentToken.getPosition(), sLexeme);
                 }
             }
-            else // isSemanticAction(x)
+            else
             {
                 semanticAnalyser.executeAction(x - ParserConstants.FIRST_SEMANTIC_ACTION, previousToken);
                 return false;
