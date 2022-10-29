@@ -59,7 +59,8 @@ namespace SuperCompilador
                 }
                 else
                 {
-                    throw new SyntaticError(ParserConstants.PARSER_ERROR[x], currentToken.getPosition(), currentToken.getLexeme()); // TODO: tipo erro 2 PRECISA DO SIMBOLO ESPERADO ALÉM DO ENCONTRADO E POSIÇÃO
+                    string sLexeme = currentToken.getLexeme() == "$" ? "EOF" : currentToken.getLexeme();
+                    throw new SyntaticError(ParserConstants.PARSER_ERROR[x], currentToken.getPosition(), sLexeme);
                 }
             }
             else if (isNonTerminal(x))
@@ -67,11 +68,14 @@ namespace SuperCompilador
                 if (pushProduction(x, a))
                     return false;
                 else
-                    throw new SyntaticError(ParserConstants.PARSER_ERROR[x], currentToken.getPosition(), currentToken.getLexeme()); // TODO: tipo erro 2 PRECISA DO SIMBOLO ESPERADO ALÉM DO ENCONTRADO E POSIÇÃO
+                {
+                    string sLexeme = currentToken.getLexeme() == "$" ? "EOF" : currentToken.getLexeme();
+                    throw new SyntaticError(ParserConstants.PARSER_ERROR[x], currentToken.getPosition(), sLexeme);
+                }
             }
             else // isSemanticAction(x)
             {
-                semanticAnalyser.executeAction(x - ParserConstants.FIRST_SEMANTIC_ACTION, previousToken); // TODO: tipo erro 1
+                semanticAnalyser.executeAction(x - ParserConstants.FIRST_SEMANTIC_ACTION, previousToken);
                 return false;
             }
         }
