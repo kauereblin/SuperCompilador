@@ -159,14 +159,14 @@ var     = identificador : "var"
 <tipo> ::= float | int | char | string | boolean ;
 <valor> ::= tpInt | tpFloat | tpString | tpChar | true | false ;
 
-<lista_identificadores> ::= identificador <lista_identificadores_> ;
+<lista_identificadores> ::= identificador #32 <lista_identificadores_> ;
 <lista_identificadores_> ::= "," <lista_identificadores> | î ;
 
 <instrucao> ::= <declaracao_constantes> | <declaracao_variaveis> | <comando> ;
 <lista_instrucoes> ::= <instrucao> <lista_instrucoes_> ;
 <lista_instrucoes_> ::= <lista_instrucoes> | î ;
 
-<dec_t> ::= ":" <tipo> <dec_t_> ;
+<dec_t> ::= ":" <tipo> #30 #31 <dec_t_> ;
 <dec_t_> ::= "=" <valor> | î ;
 <dec_v> ::= "=" <valor> ;
 
@@ -179,21 +179,21 @@ var     = identificador : "var"
 <lista_comandos> ::= <comando> <lista_comandos_> ;
 <lista_comandos_> ::= <lista_comandos> | î ;
 
-<atribuicao> ::= identificador "=" <expressao> ";" ;
+<atribuicao> ::= identificador #32 "=" <expressao> #34 ";" ;
 
-<entrada> ::= readln "(" <string_opcional> <lista_identificadores> ")" ";" ;
-<string_opcional> ::= tpString "," | î ;
+<entrada> ::= readln "(" <string_opcional> <lista_identificadores> #35 ")" ";" ;
+<string_opcional> ::= tpString #22 #14 "," | î ;
 
 <lista_expressao> ::= <expressao> #14 <lista_expressao_>;
 <lista_expressao_> ::= "," <lista_expressao> | î ;
 
-<saida> ::= <tipo_saida> "(" <lista_expressao> ")" ";" #17 ;
+<saida> ::= <tipo_saida> "(" <lista_expressao> ")" #17 ";" ;
 <tipo_saida> ::= print | println;
 
-<selecao> ::= if "(" <expressao> ")" <lista_comandos> <else_opcional> end ";" ;
-<else_opcional> ::= else <lista_comandos> | î ;
+<selecao> ::= if "(" <expressao> ")" #24 <lista_comandos> <else_opcional> end #26 ";" ;
+<else_opcional> ::= else #25 <lista_comandos> | î ;
 
-<repeticao> ::= do <lista_comandos> while "(" <expressao> ")" end ";" ;
+<repeticao> ::= #27 do <lista_comandos> while "(" <expressao> ")" #28 end ";" ;
 
 <expressao> ::= <elemento> <expressao_> ;
 <expressao_> ::= "&&" <elemento> #18 <expressao_> |
@@ -214,7 +214,7 @@ var     = identificador : "var"
  	       | "/" <fator> #4  <termo_> 
 	       | "%" <fator> #20 <termo_> ;
 
-<fator> ::= identificador           |
+<fator> ::= identificador        #33|
 	    tpInt	       #5 |
 	    tpFloat  	       #6 |
 	    tpChar 	       #21|
