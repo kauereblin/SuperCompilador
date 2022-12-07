@@ -9,11 +9,13 @@ namespace SuperCompilador
         private string                     code;
         private string                     relationalOperator;
         private Stack<string>              typeStack   = new Stack<string>();
-        private Stack<string>              labelStack  = new Stack<string>();
         private Dictionary<string, string> symbolTable = new Dictionary<string, string>();
         private string                     varType;
         private List<string>               ids;
         private string                     parseClass;
+        private Stack<string>              labelStack  = new Stack<string>();
+        private int                        labelCounter = 1;
+        private const string               LABEL = "L";
 
         public void executeAction(int action, Token token)
         {
@@ -253,9 +255,9 @@ namespace SuperCompilador
 
                 case 24:
                     {
-                        string label = labelStack.Pop();
+                        string label = LABEL + labelCounter++;
 
-                        code += "brfalse" + label;
+                        code += "brfalse " + label;
 
                         labelStack.Push(label);
                     }
@@ -263,19 +265,33 @@ namespace SuperCompilador
 
                 case 25:
                     {
-                    
+                        string label2 = LABEL + labelCounter++;
+
+                        code += "br " + label2;
+
+                        string label1 = labelStack.Pop();
+
+                        code += label1 + ":";
+
+                        labelStack.Push(label2);
                     }
                 break;
 
                 case 26:
                     {
-                    
+                        string label = labelStack.Pop();
+
+                        code += label + ":";
                     }
                 break;
 
                 case 27:
                     {
+                        string label = LABEL + labelCounter++;
 
+                        code += label + ":";
+
+                        labelStack.Push(label);
                     }
                 break;
 
@@ -283,7 +299,7 @@ namespace SuperCompilador
                     {
                         string label = labelStack.Pop();
 
-                        code += "brtrue" + label;
+                        code += "brtrue " + label;
                     }
                 break;
 
