@@ -9,6 +9,7 @@ namespace SuperCompilador
         private string                     code;
         private string                     relationalOperator;
         private Stack<string>              typeStack   = new Stack<string>();
+        private Stack<string>              labelStack  = new Stack<string>();
         private Dictionary<string, string> symbolTable = new Dictionary<string, string>();
         private string                     varType;
         private List<string>               ids;
@@ -47,6 +48,7 @@ namespace SuperCompilador
                     {
                         string type1 = typeStack.Pop(); 
                         string type2 = typeStack.Pop();
+
                         if (type1 == "float64" || type2 == "float64")
                             typeStack.Push("float64");
                         else
@@ -60,6 +62,7 @@ namespace SuperCompilador
                     {
                         string type1 = typeStack.Pop();
                         string type2 = typeStack.Pop();
+
                         if (type1 == type2)
                             typeStack.Push(type1);
 
@@ -71,7 +74,24 @@ namespace SuperCompilador
                     {
                         typeStack.Push("int64");
 
-                        code += $"ldc.i8 {token.getLexeme()}\n";
+                        string number = token.getLexeme();
+                        int charD = number.IndexOf("d");
+                        int result;
+
+                        if (charD == -1)
+                        {
+                            result = Convert.ToInt32(number);
+                        }
+                        else
+                        {
+                            string before = number.Substring(0, charD);
+                            string after  = number.Substring(charD);
+
+                            result = Convert.ToInt32(before) * (int)Math.Pow(10, Convert.ToInt32(after));
+
+                        }
+
+                        code += $"ldc.i8 {result}\n";
                         code += $"conv.r8\n";
                     }
                 break;
@@ -99,7 +119,7 @@ namespace SuperCompilador
 
                         if (type == "float64" || type == "int64")
                             typeStack.Push(type);
-
+                        
                         code += "ldc.i8 - 1\n";
                         code += "conv.r8\n";
                         code += "mul\n";
@@ -167,11 +187,11 @@ namespace SuperCompilador
 
                 case 15:
                     {
-                        code += ".assembly extern mscorlib { }\n"           +
-                                ".assembly _codigo_objeto{ }\n"             +
-                                ".module _codigo_objeto.exe\n\n"            +
-                                ".class public _UNICA{ \n"                  +
-                                ".method static public void _principal()\n" +
+                        code += ".assembly extern mscorlib { }\n"      +
+                                ".assembly _object_code{ }\n"          +
+                                ".module _object_code.exe\n\n"         +
+                                ".class public _UNIC{ \n"              +
+                                ".method static public void _main()\n" +
                                 "{ .entrypoint\n";
                     }
                 break;
@@ -184,11 +204,7 @@ namespace SuperCompilador
                     }
                 break;
 
-                case 17:
-                    {
-                        
-                    }
-                break;
+                case 17: code += $"ldstr \"\"\ncall void [mscorlib]System.Console::WriteLine(string)\n"; break;
 
                 case 18:
                     {
@@ -204,36 +220,44 @@ namespace SuperCompilador
 
                 case 19:
                     {
-                    
+                        string type1 = typeStack.Pop();
+                        string type2 = typeStack.Pop();
+
+                        if (type1 == "bool" && type2 == "bool")
+                            typeStack.Push("bool");
+
+                        code += "or";
                     }
                 break;
 
                 case 20:
                     {
-                    
+                        string type1 = typeStack.Pop();
+                        string type2 = typeStack.Pop();
+
+                        if (type1 == type2 && (type1 == "int64" || type1 == "float64"))
+                            typeStack.Push(type1);
+
+                        code += "rem";
                     }
                 break;
 
                 case 21:
-                    {
-                    
-                    }
-                break;
-
                 case 22:
                     {
-                    
+                        typeStack.Push("string");
+
+                        code += $"ldstr \"{token.getLexeme()}\"\n";
                     }
                 break;
 
-                case 23:
-                    {
-                    
-                    }
-                break;
                 case 24:
                     {
-                    
+                        string label = labelStack.Pop();
+
+                        code += "brfalse" + label;
+
+                        labelStack.Push(label);
                     }
                 break;
 
@@ -251,19 +275,15 @@ namespace SuperCompilador
 
                 case 27:
                     {
-                    
+
                     }
                 break;
 
                 case 28:
                     {
-                    
-                    }
-                break;
+                        string label = labelStack.Pop();
 
-                case 29:
-                    {
-                    
+                        code += "brtrue" + label;
                     }
                 break;
 
@@ -271,8 +291,11 @@ namespace SuperCompilador
                     {
                         switch (token.getLexeme())
                         {
-                            case "int"  : varType = "int64"  ; break;
-                            case "float": varType = "float64"; break;
+                            case "int"    : varType = "int64"  ; break;
+                            case "float"  : varType = "float64"; break;
+                            case "char"   : varType = "char"   ; break;
+                            case "string" : varType = "string" ; break;
+                            case "boolean": varType = "bool"   ; break;
                         }
                     }
                 break;
@@ -288,13 +311,9 @@ namespace SuperCompilador
 
                         ids.Clear();
                     }
-                break;
+                    break;
 
-                case 32:
-                    {
-                        ids.Add(token.getLexeme());
-                    }
-                break;
+                case 32: ids.Add(token.getLexeme()); break;
 
                 case 33:
                     {
@@ -304,7 +323,7 @@ namespace SuperCompilador
 
                         typeStack.Push(idType);
 
-                        code += $"ldloc {id}{ (idType == "int64" ? "\nconv.r8" : "") }\n";
+                        code += $"ldloc {id} { (idType == "int64" ? "\nconv.r8" : "") }\n";
                     }
                 break;
 
@@ -314,7 +333,7 @@ namespace SuperCompilador
                         ids.RemoveAt(ids.Count - 1);
 
                         string idType = symbolTable[id];
-                        string expType = typeStack.Pop();
+                        typeStack.Pop();
 
                         if (idType == "int64")
                             code += "conv.i8\n";
