@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.IO;
+using System.Text;
 
 namespace SuperCompilador
 {
@@ -107,6 +109,17 @@ namespace SuperCompilador
             currentToken = scanner.nextToken();
 
             while (!step());
+
+            string filePath = semanticAnalyser.objFile;
+            filePath = filePath.Substring(0, filePath.IndexOf(".")) + ".il";
+
+            FileStream fs = File.OpenWrite(filePath);
+
+            byte[] bytes = Encoding.UTF8.GetBytes(semanticAnalyser.code);
+
+            fs.Write(bytes, 0, bytes.Length);
+
+            fs.Close();
         }
     }
 }

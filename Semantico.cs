@@ -6,16 +6,18 @@ namespace SuperCompilador
 {
     public class Semantico : Constants
     {
-        private string                     code;
+        public  string                     code;
         private string                     relationalOperator;
         private Stack<string>              typeStack   = new Stack<string>();
         private Dictionary<string, string> symbolTable = new Dictionary<string, string>();
         private string                     varType;
-        private List<string>               ids;
+        private List<string>               ids = new List<string>();
         private string                     parseClass;
         private Stack<string>              labelStack  = new Stack<string>();
         private int                        labelCounter = 1;
         private const string               LABEL = "L";
+
+        public string objFile { get; set; }
 
         public void executeAction(int action, Token token)
         {
@@ -183,7 +185,7 @@ namespace SuperCompilador
                         if (type == "int64")
                             code += "conv.i8\n";
 
-                        code += $"call void [mscorlib]System.Console::Write({ type })";
+                        code += $"call void [mscorlib]System.Console::Write({ type })\n";
                     }
                 break;
 
@@ -193,15 +195,15 @@ namespace SuperCompilador
                                 ".assembly _object_code{ }\n"          +
                                 ".module _object_code.exe\n\n"         +
                                 ".class public _UNIC{ \n"              +
-                                ".method static public void _main()\n" +
-                                "{ .entrypoint\n";
+                                ".method static public void _main() {\n" +
+                                ".entrypoint\n";
                     }
                 break;
 
                 case 16:
                     {
-                        code += "\tret\n" +
-                                "\t}\n" +
+                        code += "ret\n" +
+                                "}\n" +
                                 "}\n";
                     }
                 break;
@@ -249,7 +251,7 @@ namespace SuperCompilador
                     {
                         typeStack.Push("string");
 
-                        code += $"ldstr \"{token.getLexeme()}\"\n";
+                        code += $"ldstr {token.getLexeme()}\n";
                     }
                 break;
 
@@ -371,8 +373,8 @@ namespace SuperCompilador
                             }
 
                             code += "call string[mscorlib]System.Console::ReadLine()\n";
-                            code += $"call tipoid[mscorlib]System.{ parseClass }::Parse(string)\n";
-                            code += "stloc id\n";
+                            code += $"call {idType} [mscorlib]System.{ parseClass }::Parse(string)\n";
+                            code += $"stloc {id}\n";
                         }
 
                         ids.Clear();

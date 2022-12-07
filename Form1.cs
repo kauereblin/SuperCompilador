@@ -91,6 +91,8 @@ namespace SuperCompilador
             var sintatico = new Sintatico();
             var semantico = new Semantico();
 
+            semantico.objFile = fileStripStatusLabel.Text;
+
             lexico.setInput(editor.Text);
             bool noError = true;
 
