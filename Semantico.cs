@@ -30,8 +30,10 @@ namespace SuperCompilador
 
                         if (type1 == "float64" || type2 == "float64")
                             typeStack.Push("float64");
-                        else
+                        else if (type1 == "int64" || type2 == "int64")
                             typeStack.Push("int64");
+                        else
+                            throw new SemanticError("tipo(s) incompatível(is) em expressão aritmética", token.getPosition());
 
                         code += "add\n";
                     }
@@ -39,10 +41,13 @@ namespace SuperCompilador
 
                 case 2: 
                     {
-                        typeStack.Pop();
-                        typeStack.Pop();
+                        string type1 = typeStack.Pop();
+                        string type2 = typeStack.Pop();
 
-                        typeStack.Push("float64");
+                        if (type1 == "float64" || type2 == "float64")
+                            typeStack.Push("float64");
+                        else
+                            throw new SemanticError("tipo(s) incompatível(is) em expressão aritmética", token.getPosition());
 
                         code += "sub\n";
                     }
@@ -55,8 +60,10 @@ namespace SuperCompilador
 
                         if (type1 == "float64" || type2 == "float64")
                             typeStack.Push("float64");
-                        else
+                        else if (type1 == "int64" || type2 == "int64")
                             typeStack.Push("int64");
+                        else
+                            throw new SemanticError("tipo(s) incompatível(is) em expressão aritmética", token.getPosition());
 
                         code += "mul\n";
                     }
@@ -69,6 +76,8 @@ namespace SuperCompilador
 
                         if (type1 == type2)
                             typeStack.Push(type1);
+                        else
+                            throw new SemanticError("tipo(s) incompatível(is) em expressão aritmética", token.getPosition());
 
                         code += "div\n";
                     }
@@ -104,7 +113,9 @@ namespace SuperCompilador
                     {
                         typeStack.Push("float64");
 
-                        code += $"ldc.r8 {token.getLexeme()}\n";
+                        double value = Convert.ToDouble(token.getLexeme());
+
+                        code += $"ldc.r8 {value}\n";
                     }
                 break;
 
@@ -114,6 +125,8 @@ namespace SuperCompilador
 
                         if (type == "float64" || type == "int64")
                             typeStack.Push(type);
+                        else
+                            throw new SemanticError("tipo(s) incompatível(is) em expressão aritmética", token.getPosition());
                     }
                 break;
 
@@ -123,11 +136,12 @@ namespace SuperCompilador
 
                         if (type == "float64" || type == "int64")
                             typeStack.Push(type);
-                        
+                        else
+                            throw new SemanticError("tipo(s) incompatível(is) em expressão aritmética", token.getPosition());
+
                         code += "ldc.i8 - 1\n";
                         code += "conv.r8\n";
                         code += "mul\n";
-
                     }
                 break;
 
@@ -140,6 +154,8 @@ namespace SuperCompilador
 
                         if (type1 == type2)
                             typeStack.Push("bool");
+                        else
+                            throw new SemanticError("tipos incompatíveis em expressão relacional", token.getPosition());
 
                         switch (relationalOperator)
                         {
@@ -172,6 +188,8 @@ namespace SuperCompilador
 
                         if (type == "bool")
                             typeStack.Push("bool");
+                        else
+                            throw new SemanticError("tipo(s) incompatível(is) em expressão lógica", token.getPosition());
 
                         code += "ldc.i4.1\n";
                         code += "xor\n";
@@ -191,10 +209,10 @@ namespace SuperCompilador
 
                 case 15:
                     {
-                        code += ".assembly extern mscorlib { }\n"      +
-                                ".assembly _object_code{ }\n"          +
-                                ".module _object_code.exe\n\n"         +
-                                ".class public _UNIC{ \n"              +
+                        code += ".assembly extern mscorlib {}\n"         +
+                                ".assembly _object_code{}\n"             +
+                                ".module _object_code.exe\n"             +
+                                ".class public _UNIC{ \n"                +
                                 ".method static public void _main() {\n" +
                                 ".entrypoint\n";
                     }
@@ -217,6 +235,8 @@ namespace SuperCompilador
 
                         if (type1 == "bool" && type2 == "bool")
                             typeStack.Push("bool");
+                        else
+                            throw new SemanticError("tipo(s) incompatível(is) em expressão lógica", token.getPosition());
 
                         code += "and";
                     }
@@ -229,6 +249,8 @@ namespace SuperCompilador
 
                         if (type1 == "bool" && type2 == "bool")
                             typeStack.Push("bool");
+                        else
+                            throw new SemanticError("tipo(s) incompatível(is) em expressão lógica", token.getPosition());
 
                         code += "or";
                     }
@@ -241,6 +263,8 @@ namespace SuperCompilador
 
                         if (type1 == type2 && (type1 == "int64" || type1 == "float64"))
                             typeStack.Push(type1);
+                        else
+                            throw new SemanticError("tipos incompatíveis em expressão relacional", token.getPosition());
 
                         code += "rem";
                     }
@@ -259,7 +283,7 @@ namespace SuperCompilador
                     {
                         string label = LABEL + labelCounter++;
 
-                        code += "brfalse " + label;
+                        code += "brfalse " + label + "\n";
 
                         labelStack.Push(label);
                     }
@@ -269,11 +293,11 @@ namespace SuperCompilador
                     {
                         string label2 = LABEL + labelCounter++;
 
-                        code += "br " + label2;
+                        code += "br " + label2 + "\n";
 
                         string label1 = labelStack.Pop();
 
-                        code += label1 + ":";
+                        code += label1 + ":\n";
 
                         labelStack.Push(label2);
                     }
@@ -283,7 +307,7 @@ namespace SuperCompilador
                     {
                         string label = labelStack.Pop();
 
-                        code += label + ":";
+                        code += label + ":\n";
                     }
                 break;
 
@@ -291,7 +315,7 @@ namespace SuperCompilador
                     {
                         string label = LABEL + labelCounter++;
 
-                        code += label + ":";
+                        code += label + ":\n";
 
                         labelStack.Push(label);
                     }
@@ -301,7 +325,7 @@ namespace SuperCompilador
                     {
                         string label = labelStack.Pop();
 
-                        code += "brtrue " + label;
+                        code += "brtrue " + label + "\n";
                     }
                 break;
 
@@ -372,7 +396,7 @@ namespace SuperCompilador
                                 case "float64": parseClass = "Double"; break;
                             }
 
-                            code += "call string[mscorlib]System.Console::ReadLine()\n";
+                            code += "call string [mscorlib]System.Console::ReadLine()\n";
                             code += $"call {idType} [mscorlib]System.{ parseClass }::Parse(string)\n";
                             code += $"stloc {id}\n";
                         }

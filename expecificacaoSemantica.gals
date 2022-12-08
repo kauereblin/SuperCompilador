@@ -7,7 +7,7 @@ ParserName = Sintatico
 SemanticName = Semantico
 ScannerCaseSensitive = true
 ScannerTable = Compact
-Input = String
+Input = Stream
 Parser = LL
 #RegularDefinitions
 mai:[A-Z]
@@ -118,8 +118,6 @@ var     = identificador : "var"
 
 <string_opcional>
 
-<tipo_saida>
-
 <else_opcional>
 
 <lista_comandos>
@@ -187,8 +185,8 @@ var     = identificador : "var"
 <lista_expressao> ::= <expressao> #14 <lista_expressao_>;
 <lista_expressao_> ::= "," <lista_expressao> | î ;
 
-<saida> ::= <tipo_saida> "(" <lista_expressao> ")" #17 ";" ;
-<tipo_saida> ::= print | println;
+<saida> ::= print "(" <lista_expressao> ")" ";" |
+	    println "(" <lista_expressao> ")" ";" #17 ;
 
 <selecao> ::= if "(" <expressao> ")" #24 <lista_comandos> <else_opcional> end #26 ";" ;
 <else_opcional> ::= else #25 <lista_comandos> | î ;

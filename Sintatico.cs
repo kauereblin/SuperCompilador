@@ -13,6 +13,8 @@ namespace SuperCompilador
         private Lexico scanner;
         private Semantico semanticAnalyser;
 
+        public string fileIL { set; get; }
+
         private static bool isTerminal(int x)
         {
             return x < ParserConstants.FIRST_NON_TERMINAL;
@@ -113,13 +115,9 @@ namespace SuperCompilador
             string filePath = semanticAnalyser.objFile;
             filePath = filePath.Substring(0, filePath.IndexOf(".")) + ".il";
 
-            FileStream fs = File.OpenWrite(filePath);
+            File.WriteAllText(filePath, semanticAnalyser.code);
 
-            byte[] bytes = Encoding.UTF8.GetBytes(semanticAnalyser.code);
-
-            fs.Write(bytes, 0, bytes.Length);
-
-            fs.Close();
+            fileIL = filePath;
         }
     }
 }
