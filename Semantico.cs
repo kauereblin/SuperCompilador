@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace SuperCompilador
 {
@@ -28,12 +29,10 @@ namespace SuperCompilador
                         string type1 = typeStack.Pop();
                         string type2 = typeStack.Pop();
 
-                        if (type1 == "float64" || type2 == "float64")
-                            typeStack.Push("float64");
-                        else if (type1 == "int64" || type2 == "int64")
-                            typeStack.Push("int64");
+                        if (type1 == type2 && (type1 == "int64" || type1 == "float64"))
+                            typeStack.Push(type1);
                         else
-                            throw new SemanticError("tipo(s) incompatível(is) em expressão aritmética", token.getPosition());
+                            throw new SemanticError("tipos incompatíveis em expressão aritmética", token.getPosition());
 
                         code += "add\n";
                     }
@@ -44,10 +43,10 @@ namespace SuperCompilador
                         string type1 = typeStack.Pop();
                         string type2 = typeStack.Pop();
 
-                        if (type1 == "float64" || type2 == "float64")
-                            typeStack.Push("float64");
+                        if (type1 == type2 && (type1 == "int64" || type1 == "float64"))
+                            typeStack.Push(type1);
                         else
-                            throw new SemanticError("tipo(s) incompatível(is) em expressão aritmética", token.getPosition());
+                            throw new SemanticError("tipos incompatívis em expressão aritmética", token.getPosition());
 
                         code += "sub\n";
                     }
@@ -58,12 +57,10 @@ namespace SuperCompilador
                         string type1 = typeStack.Pop(); 
                         string type2 = typeStack.Pop();
 
-                        if (type1 == "float64" || type2 == "float64")
-                            typeStack.Push("float64");
-                        else if (type1 == "int64" || type2 == "int64")
-                            typeStack.Push("int64");
+                        if (type1 == type2 && (type1 == "int64" || type1 == "float64"))
+                            typeStack.Push(type1);
                         else
-                            throw new SemanticError("tipo(s) incompatível(is) em expressão aritmética", token.getPosition());
+                            throw new SemanticError("tipos incompatíveis em expressão aritmética", token.getPosition());
 
                         code += "mul\n";
                     }
@@ -77,7 +74,7 @@ namespace SuperCompilador
                         if (type1 == type2)
                             typeStack.Push(type1);
                         else
-                            throw new SemanticError("tipo(s) incompatível(is) em expressão aritmética", token.getPosition());
+                            throw new SemanticError("tipos incompatíveis em expressão aritmética", token.getPosition());
 
                         code += "div\n";
                     }
@@ -113,9 +110,14 @@ namespace SuperCompilador
                     {
                         typeStack.Push("float64");
 
-                        double value = Convert.ToDouble(token.getLexeme());
+                        string lexema = token.getLexeme();
 
-                        code += $"ldc.r8 {value}\n";
+                        double value = Convert.ToDouble(lexema, CultureInfo.InvariantCulture);
+
+                        String valorFormatado = value.ToString();
+                        valorFormatado = valorFormatado.Replace(',', '.');
+
+                        code += $"ldc.r8 {valorFormatado}\n";
                     }
                 break;
 
@@ -126,7 +128,7 @@ namespace SuperCompilador
                         if (type == "float64" || type == "int64")
                             typeStack.Push(type);
                         else
-                            throw new SemanticError("tipo(s) incompatível(is) em expressão aritmética", token.getPosition());
+                            throw new SemanticError("tipo incompatível em expressão aritmética", token.getPosition());
                     }
                 break;
 
@@ -137,7 +139,7 @@ namespace SuperCompilador
                         if (type == "float64" || type == "int64")
                             typeStack.Push(type);
                         else
-                            throw new SemanticError("tipo(s) incompatível(is) em expressão aritmética", token.getPosition());
+                            throw new SemanticError("tipo incompatível em expressão aritmética", token.getPosition());
 
                         code += "ldc.i8 - 1\n";
                         code += "conv.r8\n";
@@ -189,7 +191,7 @@ namespace SuperCompilador
                         if (type == "bool")
                             typeStack.Push("bool");
                         else
-                            throw new SemanticError("tipo(s) incompatível(is) em expressão lógica", token.getPosition());
+                            throw new SemanticError("tipo incompatível em expressão lógica", token.getPosition());
 
                         code += "ldc.i4.1\n";
                         code += "xor\n";
@@ -211,7 +213,7 @@ namespace SuperCompilador
                     {
                         code += ".assembly extern mscorlib {}\n"         +
                                 ".assembly _object_code{}\n"             +
-                                ".module _object_code.exe\n"             +
+                                ".module _object_code.exe\n\n"           +
                                 ".class public _UNIC{ \n"                +
                                 ".method static public void _main() {\n" +
                                 ".entrypoint\n";
@@ -236,7 +238,7 @@ namespace SuperCompilador
                         if (type1 == "bool" && type2 == "bool")
                             typeStack.Push("bool");
                         else
-                            throw new SemanticError("tipo(s) incompatível(is) em expressão lógica", token.getPosition());
+                            throw new SemanticError("tipos incompatíveis em expressão lógica", token.getPosition());
 
                         code += "and";
                     }
@@ -250,7 +252,7 @@ namespace SuperCompilador
                         if (type1 == "bool" && type2 == "bool")
                             typeStack.Push("bool");
                         else
-                            throw new SemanticError("tipo(s) incompatível(is) em expressão lógica", token.getPosition());
+                            throw new SemanticError("tipos incompatíveis em expressão lógica", token.getPosition());
 
                         code += "or";
                     }

@@ -112,12 +112,19 @@ namespace SuperCompilador
 
             while (!step());
 
-            string filePath = semanticAnalyser.objFile;
-            filePath = filePath.Substring(0, filePath.IndexOf(".")) + ".il";
+            try
+            {
+                string filePath = semanticAnalyser.objFile;
+                filePath = filePath.Substring(0, filePath.IndexOf(".")) + ".il";
 
-            File.WriteAllText(filePath, semanticAnalyser.code);
+                File.WriteAllText(filePath, semanticAnalyser.code);
 
-            fileIL = filePath;
+                fileIL = filePath;
+            }
+            catch (Exception e) // Arquivo não foi salvo antes de compilar - apenas ignora 
+            {
+                return;
+            }
         }
     }
 }
