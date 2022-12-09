@@ -137,35 +137,40 @@ namespace SuperCompilador
                 messageTextBox.Text = $"Erro na linha {line} - {invalidSymbol} {err.Message}";
                 return;
             }
+            catch (Exception err) // Erro generico - vide #33 - parar
+            {
+                return;
+            }
 
             if (noError)
                 messageTextBox.Text = "programa compilado com sucesso";
 
-            var enviromentPath = System.Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User);
-
-            Console.WriteLine(enviromentPath);
-            var paths = enviromentPath.Split(';');
-            var exePath = paths.Select(x => Path.Combine(x, "ilasm.exe"))
-                               .Where(x => File.Exists(x))
-                               .FirstOrDefault();
-
-            var p = new Process
-            {
-                StartInfo =
-                 {
-                     FileName = exePath,
-                     WorkingDirectory = $"{sintatico.fileIL.Substring(0, sintatico.fileIL.LastIndexOf("\\"))}",
-                     Arguments = $"/exe {sintatico.fileIL}"
-                 }
-            }.Start();
-
-            string exe = sintatico.fileIL;
-            exe = exe.Substring(0, exe.IndexOf(".")) + ".exe";
-
-            var p2 = new Process
-            {
-                StartInfo = { FileName = exe, }
-            }.Start();
+            // Código para compilar o .il em .exe e chamar a execução
+            //var enviromentPath = System.Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.User);
+            //
+            //Console.WriteLine(enviromentPath);
+            //var paths = enviromentPath.Split(';');
+            //var exePath = paths.Select(x => Path.Combine(x, "ilasm.exe"))
+            //                   .Where(x => File.Exists(x))
+            //                   .FirstOrDefault();
+            //
+            //var p = new Process
+            //{
+            //    StartInfo =
+            //     {
+            //         FileName = exePath,
+            //         WorkingDirectory = $"{sintatico.fileIL.Substring(0, sintatico.fileIL.LastIndexOf("\\"))}",
+            //         Arguments = $"/exe {sintatico.fileIL}"
+            //     }
+            //}.Start();
+            //
+            //string exe = sintatico.fileIL;
+            //exe = exe.Substring(0, exe.IndexOf(".")) + ".exe";
+            //
+            //var p2 = new Process
+            //{
+            //    StartInfo = { FileName = exe, }
+            //}.Start();
         }
 
         private void helpStripMenuItem_Click(object sender, EventArgs e)
