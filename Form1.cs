@@ -137,6 +137,10 @@ namespace SuperCompilador
                 messageTextBox.Text = $"Erro na linha {line} - {invalidSymbol} {err.Message}";
                 return;
             }
+            catch (Exception err) // Erro generico - vide #33 - parar
+            {
+                return;
+            }
 
             if (noError)
                 messageTextBox.Text = "programa compilado com sucesso";
